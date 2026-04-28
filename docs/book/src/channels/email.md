@@ -8,26 +8,28 @@ The general-purpose email channel. Polls IMAP for new messages, sends via SMTP. 
 
 ```toml
 [channels.email]
+default_subject = "ZeroClaw Message"
 enabled = true
-
-[channels.email.imap]
-host = "imap.example.com"
-port = 993
-username = "you@example.com"
-password = "..."                 # or app-password for Gmail/iCloud
-mailbox = "INBOX"
+from_address = "demo@gmail.com"
+idle_timeout_secs = 1740
+imap_folder = "INBOX"
+imap_host = "imap.gmail.com"
+imap_port = 993
+imap_tls = true
+max_attachment_bytes = 26214400
+password = "enc2:cdf60071892ba88c753338db62c592fa7b54426ad8ed0e0bfceb403c5ddb506f"
 poll_interval_secs = 60
-
-[channels.email.smtp]
-host = "smtp.example.com"
-port = 587
-username = "you@example.com"
-password = "..."
-
-[channels.email.filter]
+smtp_host = "smtp.gmail.com"
+smtp_port = 465
+smtp_tls = true
+username = "demo"
 allowed_senders = ["boss@example.com", "alerts@example.com"]
 subject_prefix = "[agent]"       # only respond to subjects starting with this
 ```
+
+### General gotchas
+
+- Make sure to use SSL/TLS enabled ports for IMAP and SMTP if you set `imap_tls` and `smtp_tls` to `true`. If your mail service doesn't support SSL/TLS, make sure to set both tls flags `false`.
 
 ### Gmail gotchas
 
